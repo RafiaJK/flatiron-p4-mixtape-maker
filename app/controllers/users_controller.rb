@@ -33,19 +33,9 @@ class UsersController < ApplicationController
     end
 
     def user_params
-        params.permit(:username, :password, :password_confirmation)
+        params.permit(:username, :password)
       end
 
-    # #PATCH
-    # def update 
-    #     user = User.find_by(id: params[:id])
-    #     if user
-    #         user.update(username: params[:username], avatar: params[:avatar])
-    #         render json: user, status: :ok
-    #     else
-    #         render json: {error: "User Not Found"}, status: :not_found
-    #     end
-    # end
 
     #DELETE
     def destroy

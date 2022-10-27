@@ -7,8 +7,8 @@ function ReviewForm({updateReview,addReview}) {
       })
     
       const newReview = {
-        user_id: formInput.user,
-        album_id: formInput.album,
+        user_id: formInput.user, //add in the user.id from user state here 
+        album: formInput.album,
         rating: formInput.rating,
       }
     
@@ -38,11 +38,6 @@ function ReviewForm({updateReview,addReview}) {
             <input onChange={handleChange} value={formInput.user} type="text" name="user" placeholder="User" />
             <input onChange={handleChange} value={formInput.album} type="text" name="album" placeholder="Album" /> 
             <input onChange={handleChange} value={formInput.rating} type="text" name="rating" placeholder="Review" /> 
-            {/* <select onChange={handleChange} value={formInput.song} name="type" id="selectList">
-              <option name="☕️ Cafe">Cafe</option>
-              <option name="🍸 Bar">Bar</option>
-              <option name="🍽 Restaurant">Restaurant</option>
-            </select> */}
             <button type="submit">ADD REVIEW</button>
           </form>
         </div>

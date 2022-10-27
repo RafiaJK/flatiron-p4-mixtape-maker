@@ -16,7 +16,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_25_203931) do
 
   create_table "albums", force: :cascade do |t|
     t.string "artist"
-    t.string "album"
+    t.string "title"
     t.string "year"
     t.string "cover"
     t.datetime "created_at", null: false

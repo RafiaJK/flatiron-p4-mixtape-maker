@@ -7,32 +7,28 @@ import { BrowserRouter, Switch, Route } from "react-router-dom";
 import ReviewsContainer from './ReviewsContainer';
 import ReviewForm from './ReviewForm';
 import LoginForm from './LoginForm';
+import AlbumsContainer from './AlbumsContainer';
 
 function App() {
   const [reviews, setReviews] = useState([]);
-  //const [filteredMixes, setFilteredMixes] = useState([])
+  const [albums, setAlbums] = useState([])
 
   useEffect(() => {
     fetch("/reviews")
       .then((r) => r.json())
       .then((data) => {
         setReviews(data)
-        //setFilteredMixes(data)
       });
   }, []);
 
+  useEffect(() => {
+    fetch("/albums")
+      .then((r) => r.json())
+      .then((data) => {
+        setAlbums(data)
+      });
+  }, []);
 
-  // function filterMixes(search) {
-  //   if (search === "") {
-  //     setFilteredMixes(mixes)
-  //   } else {
-  //     setFilteredMixes(mixes.filter(mix => {
-  //       return mix.mix_name.toLowerCase().includes(search.toLowerCase())
-  //       //   || location.type.toLowerCase().includes(search.toLowerCase()) 
-  //       //   || location.address.toLowerCase().includes(search.toLowerCase())
-  //     }))
-  //   }
-  // }
 
   //LOGIN
   function Login() {
@@ -64,31 +60,32 @@ function App() {
     );
   }
 
-
   return (
     <div className="App">
       <header className="App-header">
-
+      <LoginForm />
+      </header>
       <BrowserRouter>
         <Navbar />
-        <LoginForm />
 
         <Switch>
-          <Route path="/">
-            <Home />
-          </Route>
-          <Route path="/create-review">
+         
+          <Route exact path="/create-review">
             <ReviewForm />
           </Route>
+
           <Route exact path="/all-reviews">
-            {/* <ReviewsContainer reviews={reviews} /> */}
+            <ReviewsContainer reviews={reviews} />
           </Route>
+
+          <Route exact path="/">
+            <Home />
+            <AlbumsContainer albums={albums} />
+
+          </Route>
+
         </Switch>
       </BrowserRouter>
-      </header>
-      <ReviewForm />
-
-
 
     </div>
   );

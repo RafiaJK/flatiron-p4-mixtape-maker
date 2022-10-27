@@ -1,4 +1,6 @@
 class ReviewsController < ApplicationController
+  #  before_action :authorize
+
     #GET
     def index
         reviews = Review.all
@@ -17,7 +19,7 @@ class ReviewsController < ApplicationController
 
     #CREATE
     def create
-        review = Review.create(user_id: params[:user_id], album_id: params[:album_id], review: params[:review])
+        review = Review.create(user_id: session[:user_id], album_id: params[:album_id], review: params[:review])
         render json: review, status: :created
     end
 
@@ -25,7 +27,7 @@ class ReviewsController < ApplicationController
     def update 
         review = Review.find_by(id: params[:id])
         if review
-            review.update(user_id: params[:user_id], album_id: params[:album_id], review: params[:review])
+            review.update(user_id: session[:user_id], album_id: params[:album_id], review: params[:review])
             render json: review, status: :ok
         else
             render json: {error: "Review Not Found"}, status: :not_found
@@ -41,6 +43,12 @@ class ReviewsController < ApplicationController
         else
             render json: {error: "Review Not Found"}, status: :not_found
         end
+    end
+
+    private
+
+    def authorize
+        return render json: {error: "Not authorized"}, status: :unauthorized unless session.include? :user_id
     end
 
 end

@@ -49,7 +49,7 @@ function LoginForm({ onLogin, setCurrentUser }) {
 
             <label> Password 
                 <input type="password" value={password}
-                onChange={(e) => setUsername(e.target.value)}/>
+                onChange={(e) => setPassword(e.target.value)}/>
             </label>
             <input type="submit" value="Sign up" />
             <input type="submit" value="Login" onClick={()=> setLogin}/>
