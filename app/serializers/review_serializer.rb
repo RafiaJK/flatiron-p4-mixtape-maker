@@ -1,3 +1,4 @@
 class MixSerializer < ActiveModel::Serializer
-  attributes :id, :user_id, :song_id, :mix_name
+  attributes :id, :user_id, :album_id, :rating
+
 end

@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
-  resources :mixes
-  resources :songs, only: [:index, :show, :create]
-  resources :users
+  resources :reviews
+  resources :albums, only: [:index, :show, :create]
+  resources :users, only: [:show, :create]
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Defines the root path route ("/")
@@ -12,5 +12,10 @@ Rails.application.routes.draw do
   get '*path',
   to: 'fallback#index',
   constraints: ->(req) { !req.xhr? && req.format.html? }
-  
+
+  post "/login", to: "sessions#create"
+  get "/me", to: "users#show"
+  delete "/logout", to: "sessions#destroy"
+
+
 end

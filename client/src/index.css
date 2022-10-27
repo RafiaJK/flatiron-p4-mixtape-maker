@@ -11,3 +11,22 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.cards {
+  list-style: none;
+}
+
+.card {
+  margin: 1rem;
+  color: rgb(29, 2, 2);
+}
+
+.card img {
+  width: 100%;
+}
+
+.card button {
+  margin-top: 0.5rem;
+  background-color: rgb(91, 5, 5);
+  color: rgb(255, 229, 229);
+}

@@ -14,26 +14,26 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_25_203931) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "mixes", force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "song_id"
-    t.string "mix_name"
-    t.string "cover_art"
+  create_table "albums", force: :cascade do |t|
+    t.string "artist"
+    t.string "album"
+    t.string "year"
+    t.string "cover"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "songs", force: :cascade do |t|
-    t.string "song"
-    t.string "artist"
-    t.string "album"
+  create_table "reviews", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "album_id"
+    t.string "rating"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
   create_table "users", force: :cascade do |t|
     t.string "username"
-    t.string "avatar"
+    t.string "password_digest"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
