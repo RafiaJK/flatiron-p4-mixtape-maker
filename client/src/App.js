@@ -8,6 +8,7 @@ import ReviewsContainer from './ReviewsContainer';
 import ReviewForm from './ReviewForm';
 import LoginForm from './LoginForm';
 import AlbumsContainer from './AlbumsContainer';
+import AlbumForm from './AlbumForm';
 
 function App() {
   const [reviews, setReviews] = useState([]);
@@ -24,10 +25,13 @@ function App() {
   useEffect(() => {
     fetch("/albums")
       .then((r) => r.json())
-      .then((data) => {
-        setAlbums(data)
-      });
+      .then(setAlbums);
   }, []);
+
+  function updateAlbums(newAlbum) {
+    const albumToAdd = {...newAlbum, id: albums.length+1}
+    setAlbums([...albums], albumToAdd)
+  }
 
 
   //LOGIN
@@ -43,7 +47,7 @@ function App() {
     if (user) {
       return <h2>Welcome, {user.username}!</h2>;
     } else {
-      return <Login onLogin={setUser} />;
+      return <LoginForm onLogin={setUser} />;
     }
   }
 
@@ -63,13 +67,16 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-      <LoginForm />
+
       </header>
       <BrowserRouter>
         <Navbar />
 
         <Switch>
-         
+          <Route exact path="/login">
+           <Login />
+          </Route>
+
           <Route exact path="/create-review">
             <ReviewForm />
           </Route>
@@ -80,8 +87,8 @@ function App() {
 
           <Route exact path="/">
             <Home />
-            <AlbumsContainer albums={albums} />
-
+            <AlbumsContainer albums={albums}  />
+            <AlbumForm updateAlbums={updateAlbums} />
           </Route>
 
         </Switch>

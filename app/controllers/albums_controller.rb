@@ -17,7 +17,7 @@ class AlbumsController < ApplicationController
 
     #CREATE
     def create
-        album = Album.create(artist: params[:artist], album: params[:album], year: params[:year], cover: params[:cover])
+        album = Album.create(artist: params[:artist], title: params[:title], year: params[:year], cover: params[:cover])
         render json: album, status: :created
     end
 

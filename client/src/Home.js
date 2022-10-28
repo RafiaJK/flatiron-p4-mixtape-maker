@@ -5,14 +5,7 @@ function Home() {
 
   return (
     <section className="container">
-      {/* {mixes.map((mix) => (
-        <div key={mix.id} className="card">
-          <h2>
-            <Link to={`/mixes/${mix.id}`}>{mix.name}</Link>
-          </h2>
-          <button onClick={() => handleDelete(mix.id)}>Delete</button>
-        </div>
-      ))} */}
+   
     </section>
   );
 }

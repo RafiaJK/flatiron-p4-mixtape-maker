@@ -17,7 +17,7 @@ function LoginForm({ onLogin, setCurrentUser }) {
             body: JSON.stringify({username, password, password_confirmation:passwordConfirmation }),
         })
             .then((r) => r.json())
-            .then(onLogin);
+            .then((user) => onLogin(user));
     }
 
     function onSubmit(e){
