@@ -20,5 +20,6 @@ Rails.application.routes.draw do
   post "/signup", to: "users#create"
   post "/all-reviews", to: "reviews#create"
   post "/create-review", to: "reviews#create"
+  post "/add-album", to: "albums#create"
 
 end

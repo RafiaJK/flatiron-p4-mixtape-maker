@@ -12,7 +12,7 @@ function ReviewForm({ updateReview, addReview }) {
   }
 
   const newReview = {
-    user_id: formInput.user, //add in the user.id from user state here 
+    user_id: formInput.user.id, //add in the user.id from user state here 
     album: formInput.album,
     rating: formInput.rating
   }
@@ -30,9 +30,6 @@ function ReviewForm({ updateReview, addReview }) {
       body: JSON.stringify(newReview),
     });
   }
-  //console.log(newReview)
-
-
 
   return (
     <div className="new-review-form">
@@ -40,14 +37,6 @@ function ReviewForm({ updateReview, addReview }) {
       <form onSubmit={addReview}>
         <input onChange={handleChange} value={formInput.user} type="text" name="user" placeholder="User" />
         <input onChange={handleChange} value={formInput.album} type="text" name="album" placeholder="Album" />
-
-        {/* <select onChange={handleChange} value={formInput.album} name="type" id="selectList">
-              <option name="☕️ Cafe">Cafe</option>
-              for(var i = 0;i < albums.length; i++) {
-             <option value="data[i].CATEGORIES"></option>
-              }
-            </select> */}
-
         <input onChange={handleChange} value={formInput.rating} type="text" name="rating" placeholder="Review" />
         <button type="submit">ADD REVIEW</button>
       </form>

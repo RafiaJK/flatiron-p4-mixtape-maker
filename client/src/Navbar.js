@@ -25,6 +25,7 @@ function Navbar({user, setUser}) {
         )}
       <nav>
         <Link to="/">Home </Link>
+        <Link to="/add-album">Add Album</Link>
         <Link to="/create-review">Create A New Review</Link>
         <Link to="/all-reviews">View All Reviews</Link>
       </nav>

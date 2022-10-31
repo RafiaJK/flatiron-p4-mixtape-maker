@@ -49,22 +49,17 @@ function App() {
     setReviews([...reviews], reviewToAdd)
   }
 
-  //LOGIN
-  // function Login() {
-  //   const [user, setUser] = useState(null);
-  //   useEffect(() => {
-  //     fetch("/me").then((response) => {
-  //       if (response.ok) {
-  //         response.json().then((user) => setUser(user));
-  //       }
-  //     });
-  //   }, []);
-  //   if (user) {
-  //     return <h2>Welcome, {user.username}!</h2>;
-  //   } else {
-  //     return <LoginForm onLogin={setUser} />;
-  //   }
-  // }
+  function handleUpdateReview(updatedReview) {
+    const updatedReviews = reviews.map((review) => {
+      return review.id === updatedReview.id ? updatedReview : review;
+    });
+    setReviews(updatedReviews);
+  }
+
+  function handleDeleteReview(reviewToDelete) {
+    const updatedReviews = reviews.filter((review) => review.id !== reviewToDelete.id);
+    setReviews(updatedReviews);
+  }
 
 
 
@@ -84,13 +79,17 @@ function App() {
                 <AlbumForm updateAlbums={updateAlbums} />
               </Route>
 
+              <Route exact path="/add-album">
+                <AlbumForm updateAlbums={updateAlbums} />
+              </Route>
+
               <Route exact path="/create-review">
                 <ReviewForm updateReview={updateReview}/>
               </Route>
 
               <Route exact path="/all-reviews">
-                <ReviewsContainer reviews={reviews} />
-                <ReviewForm updateReview={updateReview}/>
+                <ReviewsContainer reviews={reviews} updatedReview={handleUpdateReview} onDeleteReview={handleDeleteReview}/>
+                <ReviewForm/>
               </Route>
             </Switch>
           ) : (

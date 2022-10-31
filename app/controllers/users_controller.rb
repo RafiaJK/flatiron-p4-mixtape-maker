@@ -8,7 +8,7 @@ class UsersController < ApplicationController
 
     #GET 
     def show
-        user = User.find_by(session[:user_id])
+        user = User.find_by(id: session[:user_id])
         render json: user
     end
 
@@ -38,6 +38,7 @@ class UsersController < ApplicationController
     def user_params
         params.permit(:username, :password, :password_confirmation)
       end
+
 
 
     #DELETE
