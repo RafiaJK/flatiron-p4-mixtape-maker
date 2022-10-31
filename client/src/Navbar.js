@@ -1,24 +1,32 @@
 import { Link } from "react-router-dom";
 
-function Navbar({onLogout}) {
+function Navbar({user, setUser}) {
 
-  function handleLogout() {
-    fetch("/logout", {
-      method: "DELETE",
-    }).then(() => onLogout());
-  }
+    function handleLogoutClick() {
+      fetch("/logout", { method: "DELETE" })
+      .then((r) => {
+        if (r.ok) {
+          setUser(null);
+        }
+      });
+    }
 
   return (
     <header>
+        <br/>
 
+        {user ? (
+          <button onClick={handleLogoutClick}>Logout</button>
+        ) : (
+          <>
+            <Link to="/signup">Signup</Link>
+            <Link to="/login">Login</Link>
+          </>
+        )}
       <nav>
         <Link to="/">Home </Link>
         <Link to="/create-review">Create A New Review</Link>
         <Link to="/all-reviews">View All Reviews</Link>
-        <Link to="/login">Login</Link> 
-        {/* ADD CONDITIONAL RENDERING FOR THE LOGIN LOGOUT BUTTON by seeing if cookie is there*/}
-        <button onClick={handleLogout}>Logout</button>
-
       </nav>
 
     </header>

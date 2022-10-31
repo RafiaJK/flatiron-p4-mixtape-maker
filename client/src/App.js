@@ -1,4 +1,3 @@
-import logo from './logo.svg';
 import './App.css';
 import Navbar from "./Navbar";
 import Home from "./Home";
@@ -9,10 +8,22 @@ import ReviewForm from './ReviewForm';
 import LoginForm from './LoginForm';
 import AlbumsContainer from './AlbumsContainer';
 import AlbumForm from './AlbumForm';
+import { current } from 'daisyui/src/colors';
+import SignUp from './SignUp';
 
 function App() {
   const [reviews, setReviews] = useState([]);
-  const [albums, setAlbums] = useState([])
+  const [albums, setAlbums] = useState([]);
+  const [user, setUser] = useState(null)
+
+  useEffect(() => {
+    // auto-login
+    fetch("/me").then((r) => {
+      if (r.ok) {
+        r.json().then((user) => setUser(user));
+      }
+    });
+  }, []);
 
   useEffect(() => {
     fetch("/reviews")
@@ -33,67 +44,68 @@ function App() {
     setAlbums([...albums], albumToAdd)
   }
 
+  function updateReview(newReview) {
+    const reviewToAdd = {...newReview, id: reviews.length+1}
+    setReviews([...reviews], reviewToAdd)
+  }
 
   //LOGIN
-  function Login() {
-    const [user, setUser] = useState(null);
-    useEffect(() => {
-      fetch("/me").then((response) => {
-        if (response.ok) {
-          response.json().then((user) => setUser(user));
-        }
-      });
-    }, []);
-    if (user) {
-      return <h2>Welcome, {user.username}!</h2>;
-    } else {
-      return <LoginForm onLogin={setUser} />;
-    }
-  }
+  // function Login() {
+  //   const [user, setUser] = useState(null);
+  //   useEffect(() => {
+  //     fetch("/me").then((response) => {
+  //       if (response.ok) {
+  //         response.json().then((user) => setUser(user));
+  //       }
+  //     });
+  //   }, []);
+  //   if (user) {
+  //     return <h2>Welcome, {user.username}!</h2>;
+  //   } else {
+  //     return <LoginForm onLogin={setUser} />;
+  //   }
+  // }
 
-  function Logout({ onLogout }) {
-    function handleLogout() {
-      fetch("/logout", {
-        method: "DELETE",
-      }).then(() => onLogout());
-    }
-    return (
-      <header>
-        <button onClick={handleLogout}>Logout</button>
-      </header>
-    );
-  }
+
 
   return (
     <div className="App">
       <header className="App-header">
-
+        <h4>⏮ My Album Reviews ⏭</h4>
       </header>
       <BrowserRouter>
-        <Navbar />
+        <Navbar user={user} setUser={setUser} />
+      <main>
+          {user ? ( 
+            <Switch>
+              <Route exact path="/">
+                <Home />
+                <AlbumsContainer albums={albums}  />
+                <AlbumForm updateAlbums={updateAlbums} />
+              </Route>
 
-        <Switch>
-          <Route exact path="/login">
-           <Login />
-          </Route>
+              <Route exact path="/create-review">
+                <ReviewForm updateReview={updateReview}/>
+              </Route>
 
-          <Route exact path="/create-review">
-            <ReviewForm />
-          </Route>
+              <Route exact path="/all-reviews">
+                <ReviewsContainer reviews={reviews} />
+                <ReviewForm updateReview={updateReview}/>
+              </Route>
+            </Switch>
+          ) : (
+            <Switch>
+              <Route exact path="/signup">
+                <SignUp setUser={setUser}/>
+              </Route>
+              <Route exact path="/login">
+                 <LoginForm setUser={setUser}/>
+              </Route>
+            </Switch>
+          )}
 
-          <Route exact path="/all-reviews">
-            <ReviewsContainer reviews={reviews} />
-          </Route>
-
-          <Route exact path="/">
-            <Home />
-            <AlbumsContainer albums={albums}  />
-            <AlbumForm updateAlbums={updateAlbums} />
-          </Route>
-
-        </Switch>
+      </main> 
       </BrowserRouter>
-
     </div>
   );
 }

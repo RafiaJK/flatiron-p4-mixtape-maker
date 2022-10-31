@@ -1,44 +1,26 @@
 import React, { useState } from "react";
-function LoginForm({ onLogin, setCurrentUser }) {
+function LoginForm({ setUser }) {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [login, setLogin] = useState("")
     const [errors, setErrors] = useState([])
-    const [passwordConfirmation, setPasswordConfirmation] = useState("");
 
 
     function handleSubmit(e) {
         e.preventDefault();
         fetch("/login", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({username, password, password_confirmation:passwordConfirmation }),
-        })
-            .then((r) => r.json())
-            .then((user) => onLogin(user));
-    }
-
-    function onSubmit(e){
-        e.preventDefault()
-        const user = {
-            username,
-            password
-        }
-        fetch(`/users`, {
-            method: "POST", 
-            headers: {'Content-Type':'application/json'},
-            body:JSON.stringify(user)
-        })
-        .then(res => {
-            if(res.ok){
-                res.json().then(setCurrentUser)
-            } else {
-                res.json().then(e => setErrors(Object.entries(e.error).flat()))
-            }
-        })
-    }
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ username, password }),
+        }).then((r) => {
+          if (r.ok) {
+            r.json().then((user) => setUser(user));
+          }
+        });
+      }
+    
 
     return (
         <form onSubmit={handleSubmit}>
@@ -51,8 +33,7 @@ function LoginForm({ onLogin, setCurrentUser }) {
                 <input type="password" value={password}
                 onChange={(e) => setPassword(e.target.value)}/>
             </label>
-            <input type="submit" value="Sign up" />
-            <input type="submit" value="Login" onClick={()=> setLogin}/>
+            <button type="submit"> Login </button>
         </form>
     );
 }

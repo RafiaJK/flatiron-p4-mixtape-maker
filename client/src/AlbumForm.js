@@ -33,7 +33,7 @@ function AlbumForm({updateAlbums, addAlbum}) {
         });
     }
 
-    console.log(newAlbum)
+
 
     return (
         <div className="new-album-form">

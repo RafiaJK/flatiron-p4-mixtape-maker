@@ -1,5 +1,5 @@
 class ReviewsController < ApplicationController
-  #  before_action :authorize
+    before_action :authorize
 
     #GET
     def index
